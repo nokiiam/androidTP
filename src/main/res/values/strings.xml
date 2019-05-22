@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">GameOfLife</string>
+    <string name="start">Start</string>
+    <string name="stop">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="reset">Reset</string>
+    <string name="game_description">
+        The game of life is a game where we simulated the life of cells.
+        The board contain multiple cells that can die or create other cells.
+        The Rules:
+            For a space where a cell is alive:
+                Each cell with one or no neighbors dies, as if by solitude.
+                Each cell with four or more neighbors dies, as if by overpopulation.
+                Each cell with two or three neighbors survives.
+        For a space that don\'t contain any living cell
+            Each space with three neighbors becomes populated.
+
+    </string>
+    <string name="game_utilisation">
+        Before starting the game you can click on the board to manually populated it with cells
+    </string>
+</resources>
