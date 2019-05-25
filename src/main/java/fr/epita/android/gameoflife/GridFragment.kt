@@ -10,10 +10,11 @@ import android.view.ViewGroup
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
 import java.util.*
+import kotlin.math.log
 
 
 class GridFragment : Fragment(){
-    private val game : Game = Game(40,40);
+    private val game : Game = Game(20,20);
     private var adaptater : RowAdaptater? = null;
     private var gameTimer : CountDownTimer? = null;
     private var startButton : Button? = null
@@ -46,15 +47,21 @@ class GridFragment : Fragment(){
 
         resumePauseButton!!.visibility =View.INVISIBLE
 
-        MyRecyclerView.adapter = adaptater;
+        MyRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = adaptater
+        }
     }
 
 
     val partialCellClickListener = {
             Y : Int ->
-        View.OnClickListener {
-            val X = it.tag as Int
-            game.switch(Y,X)
+        {
+                X: Int ->
+            View.OnClickListener {
+                game.switch(Y, X)
+                adaptater!!.notifyDataSetChanged();
+            }
         }
     }
 
@@ -62,7 +69,7 @@ class GridFragment : Fragment(){
         if (it.id == R.id.start){
             startGame()
         } else if (it.id == R.id.stop) {
-
+           if (isGameRunning) pauseGame() else startGame()
         } else if (it.id == R.id.reset) {
             resetGame()
         }
@@ -74,6 +81,7 @@ class GridFragment : Fragment(){
             gameTimer = object : CountDownTimer(30000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     game.nextTurn()
+                    adaptater!!.notifyDataSetChanged();
                 }
 
                 override fun onFinish() {
@@ -92,12 +100,15 @@ class GridFragment : Fragment(){
 
     private fun pauseGame() {
         gameTimer!!.cancel();
+        isGameRunning = false;
         resumePauseButton!!.setText(R.string.resume)
         resetButton!!.visibility = View.VISIBLE
     }
 
     private fun resetGame() {
         game.reset()
+        adaptater!!.notifyDataSetChanged();
+        isGameRunning = false;
         startButton!!.visibility = View.VISIBLE
         resumePauseButton!!.visibility = View.INVISIBLE
     }

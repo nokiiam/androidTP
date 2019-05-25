@@ -19,7 +19,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val button = view.findViewById<Button>(R.id.start) as Button
+        val button = view.findViewById<Button>(R.id.startButton) as Button
         button.setOnClickListener {
             (activity as MainActivity).changeFragment(true);
         }

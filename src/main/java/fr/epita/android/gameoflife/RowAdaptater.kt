@@ -9,7 +9,7 @@ import android.view.ViewGroup
 
 class RowAdaptater(val context: Context
                    , val data : MutableList<MutableList<Cell>>
-                   , val clickListenerCreator : (Int) -> View.OnClickListener)
+                   , val clickListenerCreator : (Int) -> (Int) -> View.OnClickListener)
     : RecyclerView.Adapter<RowAdaptater.ViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val gridView = LayoutInflater
